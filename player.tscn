@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://bnjoyuijstsu4"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_3ol4w"]
+[ext_resource type="Texture2D" uid="uid://b658ua8sy52r2" path="res://art/person_standing.drawio.png" id="1_knaum"]
+[ext_resource type="Texture2D" uid="uid://d12qjr0m1roqp" path="res://art/person_left.drawio.png" id="2_lpbgm"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2nn3y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_knaum")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_lpbgm")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_puanu"]
+size = Vector2(68, 191)
+
+[node name="Player" type="Area2D"]
+position = Vector2(193, 600)
+script = ExtResource("1_3ol4w")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_2nn3y")
+animation = &"walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3, -3.5)
+shape = SubResource("RectangleShape2D_puanu")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

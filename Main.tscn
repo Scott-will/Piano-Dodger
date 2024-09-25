@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://bflbt2fe3j8pi"]
+
+[ext_resource type="Script" path="res://Main.gd" id="1_nxsdc"]
+[ext_resource type="PackedScene" uid="uid://bnjoyuijstsu4" path="res://player.tscn" id="1_wvjt5"]
+[ext_resource type="PackedScene" uid="uid://bwrko5v6vdltm" path="res://piano.tscn" id="2_rul02"]
+[ext_resource type="PackedScene" uid="uid://d2ytb4yj6t1cs" path="res://Hud.tscn" id="4_xdxf3"]
+
+[sub_resource type="Curve2D" id="Curve2D_sxsl4"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 470, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 469, 13)
+}
+point_count = 4
+
+[node name="Main" type="Node"]
+script = ExtResource("1_nxsdc")
+mob_scene = ExtResource("2_rul02")
+
+[node name="Player" parent="." instance=ExtResource("1_wvjt5")]
+metadata/_edit_group_ = true
+
+[node name="PianoTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="ScoreTimer" type="Timer" parent="."]
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="StartPosition" type="Marker2D" parent="."]
+position = Vector2(217, 568)
+
+[node name="PianoPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_sxsl4")
+
+[node name="PianoSpawnLocation" type="PathFollow2D" parent="PianoPath"]
+position = Vector2(2, 0)
+rotation = 0.00427348
+
+[node name="Hud" parent="." instance=ExtResource("4_xdxf3")]
+
+[connection signal="hit" from="Player" to="." method="_on_player_hit"]
+[connection signal="timeout" from="PianoTimer" to="." method="_on_piano_timer_timeout"]
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
+[connection signal="start_game" from="Hud" to="." method="new_game"]

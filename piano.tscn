@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://bwrko5v6vdltm"]
+
+[ext_resource type="Texture2D" uid="uid://cerp1gh4whdcm" path="res://art/piano.png" id="1_ryeyy"]
+[ext_resource type="Script" path="res://piano.gd" id="1_vv4gw"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_88qvb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_ryeyy")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sp3v8"]
+radius = 57.0
+height = 114.0
+
+[node name="RigidBody2D" type="RigidBody2D" groups=["pianos"]]
+position = Vector2(68, 79)
+collision_mask = 0
+script = ExtResource("1_vv4gw")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(19.6563, 13.8437)
+scale = Vector2(0.5, 0.384)
+sprite_frames = SubResource("SpriteFrames_88qvb")
+metadata/_edit_group_ = true
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(21, 13)
+shape = SubResource("CapsuleShape2D_sp3v8")
+metadata/_edit_group_ = true
